@@ -1,0 +1,10 @@
+container-data/
+fhir-test-data/
+
+# IDE
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+

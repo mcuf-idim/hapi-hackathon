@@ -1,0 +1,7 @@
+FROM docker.io/hapiproject/hapi:latest
+
+# Copy the pre-populated database from the host with correct permissions
+COPY --chmod=777 container-data/hapi-db /data
+
+# Copy custom configuration
+COPY container/hapi.application.yaml /app/config/application.yaml
