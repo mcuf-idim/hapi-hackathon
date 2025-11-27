@@ -23,10 +23,10 @@ podman run -d --name hapi-seed -p 8080:8080 \
   docker.io/hapiproject/hapi:latest
 
 # Load FHIR test data into the running server (loads all data in dependency order)
-./load-fhir-data.sh
+./container/load-fhir-data.sh
 
 # Or load specific files only for testing
-# ./load-fhir-data.sh -files=fhir-test-data/Patient.ndjson,fhir-test-data/Practitioner.ndjson,fhir-test-data/Location.ndjson
+# ./container/load-fhir-data.sh -files=fhir-test-data/Patient.ndjson,fhir-test-data/Practitioner.ndjson,fhir-test-data/Location.ndjson
 ```
 
 ## Step 3: Stop seed container (keep the data)
@@ -58,64 +58,6 @@ echo "=== Basic Resource Counts ==="
 curl -s "http://localhost:8080/fhir/Patient?_summary=count" | jq -r '.total'
 curl -s "http://localhost:8080/fhir/Practitioner?_summary=count" | jq -r '.total'
 curl -s "http://localhost:8080/fhir/Encounter?_summary=count" | jq -r '.total'
-
-# Test resource relationships
-echo ""
-echo "=== Testing Resource Relationships ==="
-
-# 1. Get a sample patient and their encounters
-PATIENT_ID=$(curl -s "http://localhost:8080/fhir/Patient?_count=1" | jq -r '.entry[0].resource.id')
-echo "Sample Patient ID: $PATIENT_ID"
-echo "Encounters for this patient:"
-curl -s "http://localhost:8080/fhir/Encounter?patient=$PATIENT_ID&_count=5" | \
-  jq -r '.entry[]? | "  - Encounter \(.resource.id) on \(.resource.period.start)"'
-
-# 2. Get a practitioner and their patients
-PRACTITIONER_ID=$(curl -s "http://localhost:8080/fhir/Practitioner?_count=1" | jq -r '.entry[0].resource.id')
-echo ""
-echo "Sample Practitioner ID: $PRACTITIONER_ID"
-echo "Patients treated by this practitioner (via Encounters):"
-curl -s "http://localhost:8080/fhir/Encounter?practitioner=$PRACTITIONER_ID&_include=Encounter:patient&_count=5" | \
-  jq -r '.entry[]? | select(.resource.resourceType=="Patient") | "  - Patient: \(.resource.name[0].given[0]) \(.resource.name[0].family)"'
-
-# 3. Get observations for a patient
-echo ""
-echo "Observations for Patient $PATIENT_ID:"
-curl -s "http://localhost:8080/fhir/Observation?patient=$PATIENT_ID&_count=5" | \
-  jq -r '.entry[]? | "  - \(.resource.code.coding[0].display // .resource.code.text): \(.resource.valueQuantity.value // .resource.valueString // "N/A") \(.resource.valueQuantity.unit // "")"'
-
-# 4. Get conditions (diagnoses) for a patient
-echo ""
-echo "Conditions for Patient $PATIENT_ID:"
-curl -s "http://localhost:8080/fhir/Condition?patient=$PATIENT_ID&_count=5" | \
-  jq -r '.entry[]? | "  - \(.resource.code.coding[0].display // .resource.code.text)"'
-
-# 5. Test reverse includes - Get encounters with their locations
-echo ""
-echo "Encounters with their locations:"
-curl -s "http://localhost:8080/fhir/Encounter?_count=3&_include=Encounter:location" | \
-  jq -r '.entry[]? | select(.resource.resourceType=="Location") | "  - Location: \(.resource.name)"'
-
-# 6. Get medication requests for a patient
-echo ""
-echo "Medications for Patient $PATIENT_ID:"
-curl -s "http://localhost:8080/fhir/MedicationRequest?patient=$PATIENT_ID&_count=5" | \
-  jq -r '.entry[]? | "  - \(.resource.medicationCodeableConcept.coding[0].display // .resource.medicationCodeableConcept.text)"'
-
-# 7. Complex query - Get all resources related to a patient encounter
-echo ""
-echo "Full encounter details (with related resources):"
-ENCOUNTER_ID=$(curl -s "http://localhost:8080/fhir/Encounter?patient=$PATIENT_ID&_count=1" | jq -r '.entry[0].resource.id')
-curl -s "http://localhost:8080/fhir/Encounter/$ENCOUNTER_ID/\$everything" | \
-  jq -r '.entry[]? | "  - \(.resource.resourceType): \(.resource.id)"' | head -10
-
-# 8. Test chained searches - Patients at a specific organization
-ORG_ID=$(curl -s "http://localhost:8080/fhir/Organization?_count=1" | jq -r '.entry[0].resource.id')
-echo ""
-echo "Organization ID: $ORG_ID"
-echo "Patients with encounters at this organization:"
-curl -s "http://localhost:8080/fhir/Patient?_has:Encounter:patient:service-provider=$ORG_ID&_count=5" | \
-  jq -r '.entry[]? | "  - \(.resource.name[0].given[0]) \(.resource.name[0].family)"'
 
 # Clean up test container
 echo ""
