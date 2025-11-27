@@ -1,0 +1,130 @@
+Testing server at: http://localhost:8080/fhir
+
+═══ Test 1: Location-based Encounter Search ═══
+▶ Encounters at Location with Patient details
+  Location ID: 81c75a54-2b95-3fdf-9327-b74df8630869
+  Query: /Encounter?location=81c75a54-2b95-3fdf-9327-b74df8630869&date=ge2020-01-01&date=le2020-12-31&_include=Encounter:patient
+  Results: 11 primary matches, 14 total resources in bundle (includes related resources)
+    - Encounter: 5f2fc2f4-bd79-57fb-fddf-f8d035ae60a1
+    - Encounter: c4ca423c-9595-9147-ae3d-4766ecfee3f3
+    - Encounter: 284c1665-21e9-99ca-0426-f52010a58a3e
+
+▶ Encounters at Location with Patient details
+  Location ID: 2ac42b29-8d6a-3319-a57a-c9b68dc54c0d
+  Query: /Encounter?location=2ac42b29-8d6a-3319-a57a-c9b68dc54c0d&date=ge2020-01-01&date=le2020-12-31&_include=Encounter:patient
+  Results: 1 primary matches, 2 total resources in bundle (includes related resources)
+    - Encounter: a6c7f8a2-c7a0-7223-b9d1-8befd27e45e3
+    - Patient: f3c5bced-050c-f5f8-fbaa-22785ee3314d
+
+▶ Encounters at Location with Patient details
+  Location ID: 78175de6-182e-3f6d-a7f8-deb7cc543841
+  Query: /Encounter?location=78175de6-182e-3f6d-a7f8-deb7cc543841&date=ge2020-01-01&date=le2020-12-31&_include=Encounter:patient
+  Results: 0 primary matches, 0 total resources in bundle (includes related resources)
+
+═══ Test 2: Practitioner Workload Analysis ═══
+▶ Practitioner encounters over time period
+  Practitioner ID: f0e94ce1-83e3-3bc2-8c77-31c5838ba5ed
+  Query: /Encounter?participant=Practitioner/f0e94ce1-83e3-3bc2-8c77-31c5838ba5ed&date=ge2015-01-01&date=le2024-03-31&_include=Encounter:participant
+  Results: 6 primary matches, 7 total resources in bundle (includes related resources)
+    - Encounter: e53356fb-2092-9339-174e-d9724f1768e8
+    - Encounter: c9924269-856b-b4f4-f2ab-72b9bd27f95c
+    - Encounter: a105342a-1da5-a5dc-cbf4-2ca72f85a638
+
+▶ Practitioner encounters over time period
+  Practitioner ID: 913df346-b12f-3499-b54f-333b41887c84
+  Query: /Encounter?participant=Practitioner/913df346-b12f-3499-b54f-333b41887c84&date=ge2015-01-01&date=le2024-03-31&_include=Encounter:participant
+  Results: 6 primary matches, 7 total resources in bundle (includes related resources)
+    - Encounter: 3e4db48a-babd-02db-3823-39b77676e0dc
+    - Encounter: 83e19c2c-8617-7fd8-6e00-8e615af0f4fe
+    - Encounter: 51b58205-09fe-1644-0a3d-08684518489c
+
+▶ Practitioner encounters over time period
+  Practitioner ID: 914849bd-aeac-3505-9499-9ad2e6303d99
+  Query: /Encounter?participant=Practitioner/914849bd-aeac-3505-9499-9ad2e6303d99&date=ge2015-01-01&date=le2024-03-31&_include=Encounter:participant
+  Results: 1 primary matches, 2 total resources in bundle (includes related resources)
+    - Encounter: c2de13ce-6cec-34c9-c3d9-c5475edfb7f9
+    - Practitioner: 914849bd-aeac-3505-9499-9ad2e6303d99
+
+═══ Test 3: Patient Conditions with Context ═══
+▶ Patient conditions with encounter context
+  Patient ID: 1758caee-08df-7067-6979-8b60105a91c0
+  Query: /Condition?patient=1758caee-08df-7067-6979-8b60105a91c0&_include=Condition:patient&_include=Condition:encounter
+  Results: 18 primary matches, 31 total resources in bundle (includes related resources)
+    - Condition: f512ac89-217a-28a9-04aa-46f27457821e
+    - Condition: dcff52c8-f945-ef3a-424a-aff21aa8feb3
+    - Condition: 05bafad7-fc93-9ad3-93e7-0a09cadb579e
+
+▶ Patient conditions with encounter context
+  Patient ID: 9b5bf1f7-6757-fd7f-65ae-020e06e0d48d
+  Query: /Condition?patient=9b5bf1f7-6757-fd7f-65ae-020e06e0d48d&_include=Condition:patient&_include=Condition:encounter
+  Results: 19 primary matches, 38 total resources in bundle (includes related resources)
+    - Condition: 0cf8e312-6a4f-d7a1-ea08-359d6099c0a6
+    - Condition: f47c8feb-7f47-f219-899d-ec5344182644
+    - Condition: 49682dcf-80ca-9c98-b59b-967bfcd573cc
+
+▶ Patient conditions with encounter context
+  Patient ID: d5157dcd-b473-62c6-961b-5ffacffb94b8
+  Query: /Condition?patient=d5157dcd-b473-62c6-961b-5ffacffb94b8&_include=Condition:patient&_include=Condition:encounter
+  Results: 13 primary matches, 26 total resources in bundle (includes related resources)
+    - Condition: 73253a44-db2a-baeb-30f4-b62551d12a49
+    - Condition: 887b117c-85da-ba7a-396f-77c196caa9d5
+    - Condition: e606edc4-9147-472c-968a-73417db1f0d5
+
+═══ Test 4: Patient Procedures with Context ═══
+▶ Procedures for patient with encounter and performer details
+  Patient ID: 1758caee-08df-7067-6979-8b60105a91c0
+  Query: /Procedure?subject=Patient/1758caee-08df-7067-6979-8b60105a91c0&_include=Procedure:encounter&_include=Procedure:performer
+  Results: 0 primary matches, 22 total resources in bundle (includes related resources)
+    - Procedure: 0367d285-31d5-1be8-4757-1db232cf9771
+    - Procedure: ce5c1408-8a52-83db-3d1d-a0dcef26d8c8
+    - Procedure: 482090df-019a-96e7-1229-16a981d1f5ea
+
+▶ Procedures for patient with encounter and performer details
+  Patient ID: 9b5bf1f7-6757-fd7f-65ae-020e06e0d48d
+  Query: /Procedure?subject=Patient/9b5bf1f7-6757-fd7f-65ae-020e06e0d48d&_include=Procedure:encounter&_include=Procedure:performer
+  Results: 14 primary matches, 28 total resources in bundle (includes related resources)
+    - Procedure: 68d98d62-df75-190c-67ae-69959639454f
+    - Procedure: ab232d07-27bc-0050-4e28-1cda3e179550
+    - Procedure: 4bf88367-3dac-3bf9-2b49-0fe188504b04
+
+▶ Procedures for patient with encounter and performer details
+  Patient ID: d5157dcd-b473-62c6-961b-5ffacffb94b8
+  Query: /Procedure?subject=Patient/d5157dcd-b473-62c6-961b-5ffacffb94b8&_include=Procedure:encounter&_include=Procedure:performer
+  Results: 9 primary matches, 18 total resources in bundle (includes related resources)
+    - Procedure: aab206ff-168b-db98-6cea-cfa009087d20
+    - Procedure: d334a879-e150-946e-453c-1feeceb551b0
+    - Procedure: 04b3133e-1cca-c2ff-1db1-b7fa6521b712
+
+═══ Test 5: Patient Immunizations with Location ═══
+▶ Immunizations for patient since 2020 with location and performer
+  Patient ID: 1758caee-08df-7067-6979-8b60105a91c0
+  Query: /Immunization?patient=Patient/1758caee-08df-7067-6979-8b60105a91c0&date=ge2020-01-01&_include=Immunization:performer&_include=Immunization:location
+  Results: 0 primary matches, 0 total resources in bundle (includes related resources)
+
+▶ Immunizations for patient since 2020 with location and performer
+  Patient ID: 9b5bf1f7-6757-fd7f-65ae-020e06e0d48d
+  Query: /Immunization?patient=Patient/9b5bf1f7-6757-fd7f-65ae-020e06e0d48d&date=ge2020-01-01&_include=Immunization:performer&_include=Immunization:location
+  Results: 9 primary matches, 11 total resources in bundle (includes related resources)
+    - Immunization: 3c5b7b27-7ff0-36c0-e126-bf27e7a35437
+    - Immunization: a2b7e74f-1609-b982-2883-ef7438064294
+    - Immunization: 51185b63-6170-482f-b1ef-948abe8edb07
+
+▶ Immunizations for patient since 2020 with location and performer
+  Patient ID: d5157dcd-b473-62c6-961b-5ffacffb94b8
+  Query: /Immunization?patient=Patient/d5157dcd-b473-62c6-961b-5ffacffb94b8&date=ge2020-01-01&_include=Immunization:performer&_include=Immunization:location
+  Results: 9 primary matches, 10 total resources in bundle (includes related resources)
+    - Immunization: 32f4109f-4dec-6342-d4da-b2ca790cba73
+    - Immunization: babbca83-f9ea-b247-f833-bb6238cf5aec
+    - Immunization: a351fb84-16c1-819f-1216-0b9aad319c67
+
+Resource Counts:
+  Patient: 121
+  Practitioner: 288
+  Location: 289
+  Encounter: 8311
+  Observation: 100830
+  Condition: 4608
+  Procedure: 17429
+  Immunization: 1889
+
+Happy Hacking at the Black Forest Hackathon 2025! 🌲🚀
