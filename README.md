@@ -1,8 +1,8 @@
 # 🌲 HAPI FHIR Server for Black Forest Hackathon 2025
 
-Welcome to the **Black Forest Hackathon** in **November 2025**! 🚀
+Welcome to the **[Black Forest Hackathon](https://www.blackforesthackathon.de/sxh25/)** in **November 2025**! 🚀
 
-This repository provides a pre-configured HAPI FHIR server with synthetic patient data for your hackathon challenges, brought to you by the [Medical Center – University of Freiburg](https://www.blackforesthackathon.de/sxh25/).
+This repository provides a pre-configured HAPI FHIR server with synthetic patient data for your hackathon challenges, brought to you by the [Medical Center – University of Freiburg](https://www.uniklinik-freiburg.de/de.html).
 
 Let's build the future of smart healthcare together! 🏥💻
 
