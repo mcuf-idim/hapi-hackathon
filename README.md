@@ -72,7 +72,7 @@ The test script demonstrates complex FHIR queries including:
 - Patient conditions with related resources
 - Procedures and immunization records
 
-See [tests/test-queries.sh](tests/test-queries.sh) for the full test suite.
+See [tests/test-queries.sh](tests/test-queries.sh) for the full test suite and [tests/expected-results.txt](tests/expected-results.txt) for sample output showing what results you should expect.
 
 ## Building Your Own Image
 
