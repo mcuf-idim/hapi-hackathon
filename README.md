@@ -11,14 +11,14 @@ Let's build the future of smart healthcare together! 🏥💻
 ### Using Docker
 
 ```bash
-docker pull ghcr.io/mcuf-idim/hapi-hackathon:latest
+docker pull ghcr.io/mcuf-idim/hapi-hackathon:latest && \
 docker run -d -p 8080:8080 --name hapi-fhir ghcr.io/mcuf-idim/hapi-hackathon:latest
 ```
 
 ### Using Podman
 
 ```bash
-podman pull ghcr.io/mcuf-idim/hapi-hackathon:latest
+podman pull ghcr.io/mcuf-idim/hapi-hackathon:latest && \
 podman run -d -p 8080:8080 --name hapi-fhir ghcr.io/mcuf-idim/hapi-hackathon:latest
 ```
 
@@ -58,6 +58,10 @@ docker rmi ghcr.io/mcuf-idim/hapi-hackathon:latest
 Run comprehensive test queries to explore the interconnected healthcare data:
 
 ```bash
+# Clone this repository to get the test scripts
+git clone https://github.com/mcuf-idim/hapi-hackathon.git
+cd hapi-hackathon
+
 # Run test queries against the running server
 ./tests/test-queries.sh
 ```
@@ -66,7 +70,7 @@ The test script demonstrates complex FHIR queries including:
 - Location-based encounter searches with date ranges
 - Practitioner workload analysis
 - Patient conditions with related resources
-- Observations linked to encounters
+- Procedures and immunization records
 
 See [tests/test-queries.sh](tests/test-queries.sh) for the full test suite.
 
